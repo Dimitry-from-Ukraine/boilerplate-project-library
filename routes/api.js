@@ -22,7 +22,7 @@ const {
   createCommentByBookID,
   deleteAllCommentsByBookID,
   deleteAllComments,
-} = require('../controllers/commentController');
+} = require('../controllers/commentController.js');
 
 module.exports = function (app) {
 
