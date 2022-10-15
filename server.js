@@ -1,9 +1,10 @@
 'use strict';
 
+require('dotenv').config();
+
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const cors        = require('cors');
-require('dotenv').config();
 
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
@@ -30,11 +31,16 @@ fccTestingRoutes(app);
 //Routing for API 
 apiRoutes(app);  
     
-//404 Not Found Middleware
-app.use(function(req, res, next) {
-  res.status(404)
-    .type('text')
-    .send('Not Found');
+// 404 page not found:
+app.get('*', (req, res) => {
+  // Redirect to index
+  res.redirect('/');
+});
+
+// Internal Error Handler:
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Internal Server error: See Server Logs');
 });
 
 //Start our server and tests!
